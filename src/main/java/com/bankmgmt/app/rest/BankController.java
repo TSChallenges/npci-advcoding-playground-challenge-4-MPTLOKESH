@@ -9,31 +9,52 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// TODO: Make this class a Rest Controller
+@RestController
+@RequestMapping("/api/bank")
 public class BankController {
 
-    // TODO Autowired the BankService class
+    @Autowired
     private BankService bankService;
 
-    // TODO: API to Create a new account
-    
+    @PostMapping("/accounts")
+    public ResponseEntity<Account> createAccount(@RequestParam String name, 
+                                                 @RequestParam String accountType, 
+                                                 @RequestParam String email) {
+        Account account = bankService.createAccount(name, accountType, email);
+        return new ResponseEntity<>(account, HttpStatus.CREATED);
+    }
 
-    // TODO: API to Get all accounts
-    
+    @GetMapping("/accounts")
+    public ResponseEntity<List<Account>> getAllAccounts() {
+        return new ResponseEntity<>(bankService.getAllAccounts(), HttpStatus.OK);
+    }
 
-    // TODO: API to Get an account by ID
-    
+    @GetMapping("/accounts/{id}")
+    public ResponseEntity<Account> getAccountById(@PathVariable Integer id) {
+        return new ResponseEntity<>(bankService.getAccountById(id), HttpStatus.OK);
+    }
 
-    // TODO: API to Deposit money
-    
+    @PostMapping("/accounts/{id}/deposit")
+    public ResponseEntity<Account> depositMoney(@PathVariable Integer id, @RequestParam Double amount) {
+        return new ResponseEntity<>(bankService.depositMoney(id, amount), HttpStatus.OK);
+    }
 
-    // TODO: API to Withdraw money
-    
+    @PostMapping("/accounts/{id}/withdraw")
+    public ResponseEntity<Account> withdrawMoney(@PathVariable Integer id, @RequestParam Double amount) {
+        return new ResponseEntity<>(bankService.withdrawMoney(id, amount), HttpStatus.OK);
+    }
 
-    // TODO: API to Transfer money between accounts
-    
+    @PostMapping("/accounts/transfer")
+    public ResponseEntity<String> transferMoney(@RequestParam Integer fromId, 
+                                                @RequestParam Integer toId, 
+                                                @RequestParam Double amount) {
+        bankService.transferMoney(fromId, toId, amount);
+        return new ResponseEntity<>("Transfer successful", HttpStatus.OK);
+    }
 
-    // TODO: API to Delete an account
-    
-    
+    @DeleteMapping("/accounts/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable Integer id) {
+        bankService.deleteAccount(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

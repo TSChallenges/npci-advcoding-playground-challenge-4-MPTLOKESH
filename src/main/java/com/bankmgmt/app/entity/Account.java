@@ -1,23 +1,56 @@
 package com.bankmgmt.app.entity;
 
 public class Account {
+    private static int counter = 1;
     private Integer id;
     private String accountHolderName;
     private String accountType;
-    private Double balance;
     private String email;
+    private Double balance;
 
-    // Constructors, getters, and setters
-
-    public Account(Integer id, String accountHolderName, String accountType, Double balance, String email) {
-        this.id = id;
+    // Constructor
+    public Account(String accountHolderName, String accountType, String email) {
+        this.id = counter++; // Auto-increment ID
         this.accountHolderName = accountHolderName;
         this.accountType = accountType;
-        this.balance = balance;
+        this.email = email;
+        this.balance = 0.0; // Initial balance set to 0.0
+    }
+
+    // Getters and Setters
+    public Integer getId() {
+        return id;
+    }
+
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
+
+    public void setAccountHolderName(String accountHolderName) {
+        this.accountHolderName = accountHolderName;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    // TODO: Add getters and setters
+    public Double getBalance() {
+        return balance;
+    }
 
-
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
 }
